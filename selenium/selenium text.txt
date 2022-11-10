@@ -1,0 +1,176 @@
+1. For selenium 1st we need to open the maven project and add dependencies in the pom file which is selenium java and webdriver manager dependencies..
+
+2. 
+        WebDriverManager.edgedriver().setup();
+
+        WebDriver driver = new EdgeDriver();
+
+        driver.get("https://www.google.com");
+
+for open a google
+
+3. In 1st day we have seen how to open a seperate link 
+
+-->driver.navigate().to("https://www.instagram.com");
+		
+and how to get the current url and title
+
+-->System.out.println(driver.getCurrentUrl());
+		System.out.println(driver.getTitle());
+
+and some actions,
+..back - driver.navigate().back();
+..forward - driver.navigate().forward();
+..close - driver.close();
+..quit - driver.quit();
+
+4. In 2nd day ,
+
+..for open a original window -->String originalwindow = driver.getWindowHandle();
+.. for open a new window --> 	driver.switchTo().newWindow(WindowType.WINDOW);
+		driver.switchTo().newWindow(WindowType.TAB);
+..again original window --> driver.switchTo().window(originalwindow);
+
+.. get window height -->driver.manage().window().getSize().getHeight();
+..get window width --> driver.manage().window().getSize().getWidth();
+.. to print the dimension --> Dimension size = driver.manage().window().getSize();
+		
+		System.out.println(size.getHeight());
+		System.out.println(size.getWidth());
+..we also able to give our own dimension using-->driver.manage().window().setSize(new Dimension (800,200));
+
+** get position we need to use the Point class **
+
+..get position -->driver.manage().window().getPosition().getX();
+		driver.manage().window().getPosition().getY();
+..to print -->Point position = driver.manage().window().getPosition();
+		System.out.println(position.getX());
+		System.out.println(position.getY());
+		
+..we also able to give our own position using-->	driver.manage().window().setPosition(new Point (500 , 100));
+.. maximize --> driver.manage().window().maximize();
+.. minimize -->driver.manage().window().minimize();
+		
+** To take screenshot we need to use File class **
+
+.. screenshot -->	File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+       FileUtils.copyFile(scrFile, new File("./image1.png"));
+
+---FIND ELEMENTS--
+DAY 3:
+
+..by name and send keys -- driver.findElement(By.name("q")).sendKeys("madurai"+Keys.ENTER); 
+..by link text -- >> 	driver.findElement(By.linkText("Go to Home Page")).click();
+..by id -->WebElement loginbutton =driver.findElement(By.id("btnLogin"));
+..by relative locator -->driver.findElement(RelativeLocator.with(By.tagName("input")).above(loginbutton)).sendKeys("venkat");
+
+Day 4:
+..clear --> WebElement clearbox =driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[2]/div/div/input"));
+  clearbox.clear();
+..by  xpath -->driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[2]/div/div/input");
+.. To get a attribute -->driver.findElement(By.name("username")).getAttribute("value");
+
+Day 5:
+
+..Find a postion -->WebElement positionbox =driver.findElement(By.id("position"));
+		
+		Point xyvalue = positionbox.getLocation();
+		int xvalue = 	xyvalue.getX();
+		int yvalue = 	xyvalue.getY();
+**here we use the point class**
+
+..To get a color -->WebElement colorfind = driver.findElement(By.id("color"));
+		String color =	colorfind.getCssValue("background-color");
+**here we using cssvalue to get the color**
+.. Get a size-->	WebElement size = driver.findElement(By.id("size"));
+		
+		int height = size.getSize().getHeight();
+		int width  = size.getSize().getWidth();
+
+..click -->driver.findElement(By.id("home")).click();
+
+Day 6:
+
+dropdown:
+
+For dropdown we use the SELECT class.
+
+..To select the text from the dropdown-->	
+	WebElement dropdown =	driver.findElement(By.id("dropdown1"));
+	
+	Select select = new Select(dropdown);
+	
+	select.selectByIndex(3);
+// 	Thread.sleep(3000);
+	select.selectByValue("2");
+//	Thread.sleep(3000);
+	select.selectByVisibleText("Selenium");
+//	Thread.sleep(3000);
+
+..To get a option from the dropdown -->ist <WebElement> listofoptions =  select.getOptions();
+	
+	int size = listofoptions.size();
+	System.out.println(size);
+
+Day 7:
+
+..To check the box is enabled or not -->		
+//	WebElement enabledbox  = 	driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[5]/div/div/input"));
+//	boolean enable = 	enabledbox.isEnabled();
+//		System.out.println(enable );
+
+** For alert box we can use the ALERT class**
+..accept the alert box -->driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[1]/div/div/button")).click();
+		Alert alert = driver.switchTo().alert();
+		Thread.sleep(2000);
+		alert.accept();
+..confirmation alertbox -->
+		driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[2]/div/div/button")).click();
+		Alert confirmalert = driver.switchTo().alert();
+		Thread.sleep(3000);
+		confirmalert.dismiss();
+..promptalaertbox-->driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[3]/div/div/button")).click();
+		Alert promptalert = driver.switchTo().alert();
+		Thread.sleep(2000);
+		promptalert.sendKeys("leaftest");
+		promptalert.accept();
+
+Day 8:
+
+..To check  which box is selected wheather checked or unchecked -->WebElement checked = 	driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[2]/div/div/input[2]"));
+	WebElement unchecked = driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[2]/div/div/input[1]"));
+	
+boolean c1 = 	checked.isSelected();
+boolean c2 =	unchecked.isSelected();
+
+System.out.println(c1);
+System.out.println(c2);
+
+** here we use the selected **
+
+Day 9:
+
+..To check the box is selected if selected box or notselected box  if not selected box click that one , if selected box click that one --> WebElement notselected = driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[3]/input[1]"));
+
+if(notselected.isSelected()) {
+	notselected.click();
+}
+	
+WebElement selected = driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[3]/input[2]"));
+
+
+if(selected.isSelected()) {
+	selected.click();
+
+..If one box is selected we need to check wheather it is selected or not-->WebElement checkselected = driver.findElement(By.xpath("//*[@id=\"contentblock\"]/section/div[2]"));
+boolean check = 	checkselected.isSelected();
+System.out.println(check);
+
+
+		
+
+
+
+
+
+
